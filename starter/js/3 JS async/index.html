@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  Exercícios: 
+  <a href="https://skylab.rocketseat.com.br/api/files/1566499182493.pdf">
+    Módulo 03
+  </a>
+  <br>
+  <input type="text" name="user" placeholder="Nome do Usuário do Github"><br>
+<button onclick="">Adicionar</button>
+<br>
+<ul></ul>
+<br>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    
+    // 1
+    
+    function checaIdade(idade) {
+      return new Promise((res, rej) => {
+        setTimeout(()=>{
+          if (idade >= 18) {
+          return res("Maior que 18");
+        }
+        return rej("Menor de 18");
+        }, 2000);
+      });
+    }
+
+    checaIdade(11)
+    .then(function() {
+      console.log("Maior que 18");
+    })
+    .catch(function() {
+      console.log("Menor que 18");
+    });
+
+    // 2
+
+    var ul = document.querySelector("ul");
+    var button = document.querySelector("button");
+
+    button.addEventListener("click", () => {
+      var userRepo = document.querySelector("input").value;
+      
+      addRepos(["carregando..."]);
+
+      axios.get(`https://api.github.com/users/${userRepo}/repos`)
+        .then(response => {
+          if (response.status === 404 || response.data.length === 0) {
+            addRepos([]);
+            alert('Repositório não existe para este usuario');
+
+          } else if (response.status === 200) {
+            
+            var reposNomes = [];
+            
+            response.data.forEach(repo => {
+              reposNomes.push(repo.name);
+            });
+
+            addRepos(reposNomes);
+
+          }
+          })
+        .catch(response => {
+          addRepos([]);
+          alert('Ocorreu algum error');
+        });
+      
+    });
+
+    function addRepos(repos) {
+      var ul = document.querySelector("ul");
+      ul.innerHTML = "";
+
+      repos.forEach(nome => {
+        var li = document.createElement("li");
+
+        li.innerHTML = nome;
+
+        ul.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>

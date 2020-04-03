@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  Exercícios: 
+  <a href="https://skylab.rocketseat.com.br/api/files/1566499161406.pdf">
+    Módulo 02
+  </a>
+  <br>
+  <button id="criar">Criar Botão Vermelho</button>
+  <br>
+  <label for="">Informe um novo nome.
+    <input type="text">
+  </label>
+  <button id="add">Add na lista</button>
+  <br>
+  <ul></ul>
+  <br>
+  <div id="canvas"></div>
+  <script>
+    
+    // 1
+    
+    var botao = document.getElementById("criar");
+    var canvas = document.getElementById("canvas");
+
+    botao.addEventListener("click", function(){
+      var quadrado = document.createElement("div");
+      quadrado.style.width = "100px";
+      quadrado.style.height = "100px";
+      quadrado.style.backgroundColor = "red";
+
+      canvas.appendChild(quadrado);
+
+      addEventos();
+    });
+
+    // 2
+    
+    function getRandomColor() {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    
+    function addEventos() {
+      var quadrados = document.querySelectorAll("#canvas > div");
+      
+      quadrados.forEach((el) => {
+        el.addEventListener("mouseover", () => {
+          el.style.backgroundColor = getRandomColor();
+        });
+        el.addEventListener("mouseleave", () => {
+          el.style.backgroundColor = "red";
+        });
+      });
+    }
+
+    //  3
+
+    var nomes = ["Diego", "Gabriel", "Lucas"];
+
+    var ul = document.querySelector("ul");
+
+    function addNome(nomes) {
+      var ul = document.querySelector("ul");
+      ul.innerHTML = "";
+
+      nomes.forEach(nome => {
+        var li = document.createElement("li");
+
+        li.innerHTML = nome;
+
+        ul.appendChild(li);
+      });
+    }
+    
+    addNome(nomes);
+
+    // 4
+
+    var novoNome = document.getElementById("add");
+    
+    novoNome.addEventListener("click", () => {
+      var novoNome = document.querySelector("input").value;
+      
+      nomes.push(novoNome);
+
+      addNome(nomes);
+    });
+
+
+  </script>
+</body>
+</html>
