@@ -40,8 +40,7 @@ describe("Projects", () => {
           url: "https://github.com/Rocketseat/umbriel",
           title: "Umbriel",
           techs: ["Node", "Express", "TypeScript"],
-          likes: 0,
-          talks: []
+          likes: 0
         }
       ])
     );
@@ -124,55 +123,4 @@ describe("Projects", () => {
       .delete(`/repositories/123`)
       .expect(400);
   });
-
-  it("should be able to create a new talk(commentary)", async () => {
-    const response = await request(app)
-      .post("/repositories")
-      .send({
-        url: "https://github.com/Rocketseat/umbriel",
-        title: "Umbriel",
-        techs: ["Node", "Express", "TypeScript"]
-      });
-
-    expect(isUuid(response.body.id)).toBe(true);
-    
-    const responseCom = await request(app)
-      .post(`/commentaries/${response.body.id}`)
-      .send({
-        text: "Very nice work in this repo"
-      });
-
-    expect(responseCom.body).toMatchObject({
-      text: "Very nice work in this repo"
-     });
-  });
-
-  it("should be able to list the talks(commentaries)", async () => {
-    const response = await request(app)
-      .post("/repositories")
-      .send({
-        url: "https://github.com/Rocketseat/umbriel",
-        title: "Umbriel",
-        techs: ["Node", "Express", "TypeScript"]
-      });
-
-    expect(isUuid(response.body.id)).toBe(true);
-    
-    const responseCom = await request(app)
-      .post(`/commentaries/${response.body.id}`)
-      .send({
-        text: "Very nice work in this repo"
-      });
-
-    expect([responseCom.body]).toEqual(
-      expect.arrayContaining([
-        {
-          id: responseCom.body.id,
-          repository_id: response.body.id,
-          text: "Very nice work in this repo"
-        }
-      ])
-    );
-  });
-
 });
