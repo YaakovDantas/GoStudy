@@ -67,13 +67,13 @@ function App() {
   return (
     <div>
       <ul data-testid="repository-list">
-        {repositories.map(repositorie => 
+        {repositories.map(repository => 
           (
-            <li key={repositorie.id}>
-              {repositorie.title}
+            <li key={repository.id}>
+              {repository.title}
 
               {/* mostrar campo de criar comentário */}
-              { repositorie.id === toggleTalk 
+              { repository.id === toggleTalk 
                 && 
                   <span>
                     <input 
@@ -84,29 +84,33 @@ function App() {
                         style={{ padding:"9px", marginLeft: "5px" }}
                       />
 
-                      <button onClick={() => {handleAddCommentary(repositorie.id)}}>
+                      <button onClick={() => {handleAddCommentary(repository.id)}}>
                         Comentar
                       </button>
                   </span>
                 }
 
               {/* mostrar toggle de commntário */}
-                <button onClick={() => {handleShowCommentaryInput(repositorie.id)}}>
-                    {repositorie.id !== toggleTalk ? "Fazer" : "Ocutar"} Commentário
+                <button onClick={() => {handleShowCommentaryInput(repository.id)}}>
+                    {repository.id !== toggleTalk ? "Fazer" : "Ocutar"} Commentário
                 </button>
 
               {/* mostrar opcao de ver comentários, se tiver */}
-              {repositorie.talks.length > 0 && <button onClick={() => handleReadComments(repositorie.id)}>Ver comentários</button>}
+              { repository &&
+                repository.talks && 
+                repository.talks.length > 0 && 
+                <button onClick={() => handleReadComments(repository.id)}>Ver comentários</button>
+              }
 
               {/* lista de comentários caso click no botao acima */}
-              { repositorie.id === toggleCommentaries && 
+              { repository.id === toggleCommentaries && 
                 <ol>
                   Commentários:
-              {repositorie.talks.map((talk, index) => <li key={index}>{talk}</li>)}
+              {repository.talks.map((talk, index) => <li key={index}>{talk}</li>)}
                 </ol>
               }
 
-              <button onClick={() => handleRemoveRepository(repositorie.id)}>
+              <button onClick={() => handleRemoveRepository(repository.id)}>
                 Remover
               </button>
           </li>
