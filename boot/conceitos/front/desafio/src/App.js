@@ -4,6 +4,9 @@ import api from "./services/api";
 import "./styles.css";
 
 function App() {
+  const [repositories, setRepositories] = useState([])
+  const [title, setTitle] = useState([])
+  
   async function handleAddRepository() {
     const response = await api.post('/repositories', {
       title,
