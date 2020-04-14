@@ -1,0 +1,4 @@
+#Mon Apr 13 23:11:17 BRT 2020
+base.0=/home/thiagod/Documentos/projetos/rocket/gostudy/boot/conceitos/native/desafio/android/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
